@@ -1,0 +1,25 @@
+[
+	{"mode": "relay", "listen": ":4001", "target": "127.0.0.1:14001"},
+	
+	{"mode": "inner", "secret": "bbbbbb", "listen": ":4002", "target": "127.0.0.1:14002"},
+	{"mode": "outer", "secret": "bbbbbb", "listen": ":14002", "target": "127.0.0.1:24002"},
+
+
+
+
+	{"mode": "finder", "secret": "cccccc", "listen": "127.0.0.1:24003", "target": "127.0.0.1:14003"},
+	{"mode": "mapper", "secret": "cccccc", "listen": ":14003", "target": ":4003"},
+	
+	{"mode": "broker", "secret": "dddddd", "listen": "127.0.0.1:24004", "target": "127.0.0.1:14004"},
+	{"mode": "router", "secret": "dddddd", "listen": ":14004", "target": ":4004"},
+
+
+
+
+	{"mode": "http", "listen": ":4005"},
+	{"mode": "sock", "listen": ":4006"},
+	
+	{"mode": "https", "secret": "zzzzzz", "listen": ":4007", "target": "127.0.0.1:4009"},
+	{"mode": "socks", "secret": "zzzzzz", "listen": ":4008", "target": "127.0.0.1:4009"},
+	{"mode": "agent", "secret": "zzzzzz", "listen": ":4009"}
+]
