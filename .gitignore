@@ -1,2 +1,5 @@
-/tcplink
+/tcplink.bsd
+/tcplink.exe
+/tcplink.mac
+/tcplink.lnx
 

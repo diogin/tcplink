@@ -5,4 +5,15 @@ if [ ! -f make.bash ]; then
     exit 1
 fi
 
-go build
+export GOOS=windows
+go build -o tcplink.exe
+
+export GOOS=freebsd
+go build -o tcplink.bsd
+
+export GOOS=darwin
+go build -o tcplink.mac
+
+export GOOS=linux
+go build -o tcplink.lnx
+
