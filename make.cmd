@@ -1,7 +1,6 @@
 @echo off
 
 cd %~dp0
-gofmt -w .
 
 set GOOS=linux
 go build -o tcplink.lnx
