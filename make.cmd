@@ -2,6 +2,8 @@
 
 cd %~dp0
 
+echo building, please be patient...
+
 set GOOS=linux
 go build -o tcplink.lnx
 

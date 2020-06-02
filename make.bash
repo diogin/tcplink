@@ -5,6 +5,8 @@ if [ ! -f make.bash ]; then
     exit 1
 fi
 
+echo 'building, please be patient...'
+
 export GOOS=windows
 go build -o tcplink.exe
 
