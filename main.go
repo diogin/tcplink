@@ -24,7 +24,7 @@ func main() {
 	} else {
 		exe, err := os.Executable()
 		must(err)
-		file = path.Dir(strings.Replace(exe, "\\", "/", -1)) + "/tcplink.json"
+		file = path.Dir(strings.Replace(exe, "\\", "/", -1)) + "/config.json"
 	}
 	conf, err := ioutil.ReadFile(file)
 	must(err)
