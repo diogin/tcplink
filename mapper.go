@@ -7,16 +7,10 @@ import (
 	"time"
 )
 
-func serveMapper(secret string, listen string, target string) {
+func serveMapper(args map[string]string) {
 	clients := make(chan *net.TCPConn)
-	secKey := []byte(defaultSecret)
-	if len(secret) < 16 {
-		copy(secKey, secret)
-	} else {
-		copy(secKey, secret[:16])
-	}
 	go func() {
-		addr, err := net.ResolveTCPAddr("tcp", target)
+		addr, err := net.ResolveTCPAddr("tcp", args["target"])
 		must(err)
 		gate, err := net.ListenTCP("tcp", addr)
 		must(err)
@@ -31,10 +25,17 @@ func serveMapper(secret string, listen string, target string) {
 			}
 		}
 	}()
-	addr, err := net.ResolveTCPAddr("tcp", listen)
+	addr, err := net.ResolveTCPAddr("tcp", args["listen"])
 	must(err)
 	door, err := net.ListenTCP("tcp", addr)
 	must(err)
+	secKey := []byte(defaultSecret)
+	secret := args["secret"]
+	if len(secret) < 16 {
+		copy(secKey, secret)
+	} else {
+		copy(secKey, secret[:16])
+	}
 	for {
 		if finder, err := door.AcceptTCP(); err == nil {
 			go relayMapper(finder, clients, secKey)

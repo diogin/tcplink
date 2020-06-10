@@ -5,7 +5,8 @@ import (
 	"time"
 )
 
-func serveBroker(secret string, listen string, target string) {
+func serveBroker(args map[string]string) {
+	secret, listen, target := args["secret"], args["listen"], args["target"]
 	next := make(chan bool, 4)
 	for i := 0; i < 4; i++ {
 		go relayBroker(next, secret, listen, target)

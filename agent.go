@@ -5,11 +5,12 @@ import (
 	"time"
 )
 
-func serveAgent(listen string, secret string) {
-	addr, err := net.ResolveTCPAddr("tcp", listen)
+func serveAgent(args map[string]string) {
+	addr, err := net.ResolveTCPAddr("tcp", args["listen"])
 	must(err)
 	door, err := net.ListenTCP("tcp", addr)
 	must(err)
+	secret := args["secret"]
 	for {
 		if proxy, err := door.AcceptTCP(); err == nil {
 			go relayAgent(proxy, secret)

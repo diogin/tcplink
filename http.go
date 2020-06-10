@@ -9,8 +9,8 @@ import (
 	"time"
 )
 
-func serveHttp(listen string) {
-	addr, err := net.ResolveTCPAddr("tcp", listen)
+func serveHttp(args map[string]string) {
+	addr, err := net.ResolveTCPAddr("tcp", args["listen"])
 	must(err)
 	door, err := net.ListenTCP("tcp", addr)
 	must(err)

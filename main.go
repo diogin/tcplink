@@ -10,11 +10,24 @@ import (
 )
 
 type rule struct {
-	Name   string `json:"name"`
-	Mode   string `json:"mode"`
-	Secret string `json:"secret"`
-	Listen string `json:"listen"`
-	Target string `json:"target"`
+	Name string            `json:"name"`
+	Mode string            `json:"mode"`
+	Args map[string]string `json:"args"`
+}
+
+var rulers = map[string]func(args map[string]string){
+	"relay":  serveRelay,
+	"inner":  serveInner,
+	"outer":  serveOuter,
+	"finder": serveFinder,
+	"mapper": serveMapper,
+	"broker": serveBroker,
+	"router": serveRouter,
+	"http":   serveHttp,
+	"sock":   serveSock,
+	"https":  serveHttps,
+	"socks":  serveSocks,
+	"agent":  serveAgent,
 }
 
 func main() {
@@ -30,33 +43,10 @@ func main() {
 	must(err)
 	var rules []rule
 	must(json.Unmarshal(conf, &rules))
-	for _, link := range rules {
-		switch link.Mode {
-		case "relay":
-			go serveRelay(link.Listen, link.Target)
-		case "inner":
-			go serveInner(link.Listen, link.Target, link.Secret)
-		case "outer":
-			go serveOuter(link.Listen, link.Target, link.Secret)
-		case "finder":
-			go serveFinder(link.Secret, link.Listen, link.Target)
-		case "mapper":
-			go serveMapper(link.Secret, link.Listen, link.Target)
-		case "broker":
-			go serveBroker(link.Secret, link.Listen, link.Target)
-		case "router":
-			go serveRouter(link.Secret, link.Listen, link.Target)
-		case "http":
-			go serveHttp(link.Listen)
-		case "sock":
-			go serveSock(link.Listen)
-		case "https":
-			go serveHttps(link.Listen, link.Target, link.Secret)
-		case "socks":
-			go serveSocks(link.Listen, link.Target, link.Secret)
-		case "agent":
-			go serveAgent(link.Listen, link.Secret)
-		default:
+	for _, rule := range rules {
+		if ruler, ok := rulers[rule.Mode]; ok {
+			go ruler(rule.Args)
+		} else {
 			fmt.Println("bad mode")
 			return
 		}

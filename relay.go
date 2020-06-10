@@ -4,11 +4,12 @@ import (
 	"net"
 )
 
-func serveRelay(listen string, target string) {
-	addr, err := net.ResolveTCPAddr("tcp", listen)
+func serveRelay(args map[string]string) {
+	addr, err := net.ResolveTCPAddr("tcp", args["listen"])
 	must(err)
 	door, err := net.ListenTCP("tcp", addr)
 	must(err)
+	target := args["target"]
 	for {
 		if client, err := door.AcceptTCP(); err == nil {
 			go relay(client, target)

@@ -6,7 +6,8 @@ import (
 	"time"
 )
 
-func serveFinder(secret string, listen string, target string) {
+func serveFinder(args map[string]string) {
+	secret, listen, target := args["secret"], args["listen"], args["target"]
 	next := make(chan bool, 4)
 	secKey := []byte(defaultSecret)
 	if len(secret) < 16 {

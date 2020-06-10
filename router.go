@@ -6,10 +6,10 @@ import (
 	"time"
 )
 
-func serveRouter(secret string, listen string, target string) {
+func serveRouter(args map[string]string) {
 	clients := make(chan *net.TCPConn)
 	go func() {
-		addr, err := net.ResolveTCPAddr("tcp", target)
+		addr, err := net.ResolveTCPAddr("tcp", args["target"])
 		must(err)
 		gate, err := net.ListenTCP("tcp", addr)
 		must(err)
@@ -24,10 +24,11 @@ func serveRouter(secret string, listen string, target string) {
 			}
 		}
 	}()
-	addr, err := net.ResolveTCPAddr("tcp", listen)
+	addr, err := net.ResolveTCPAddr("tcp", args["listen"])
 	must(err)
 	door, err := net.ListenTCP("tcp", addr)
 	must(err)
+	secret := args["secret"]
 	for {
 		if broker, err := door.AcceptTCP(); err == nil {
 			go relayRouter(broker, clients, secret)

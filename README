@@ -4,7 +4,7 @@ RELAY
   transparent relay
   -----------------
 
-    {"mode":"relay", "listen":"1.1.1.1:1111", "target":"2.2.2.2:2222"}
+    {"mode":"relay", "args": {"listen":"1.1.1.1:1111", "target":"2.2.2.2:2222"}}
 
       client ------TCP------> [relay ------TCP------> server
                            listen target
@@ -12,8 +12,8 @@ RELAY
   encrypted relay
   ---------------
 
-    {"mode":"inner", "secret":"0123456789abcdef", "listen":"1.1.1.1:1111", "target":"2.2.2.2:2222"}
-    {"mode":"outer", "secret":"0123456789abcdef", "listen":"2.2.2.2:2222", "target":"3.3.3.3:3333"}
+    {"mode":"inner", "args": {"listen":"1.1.1.1:1111", "target":"2.2.2.2:2222", "secret":"0123456789abcdef"}}
+    {"mode":"outer", "args": {"listen":"2.2.2.2:2222", "target":"3.3.3.3:3333", "secret":"0123456789abcdef"}}
 
       client ------TCP------> [inner ======TCPS======> [outer ------TCP------> server
                            listen target            listen target
@@ -25,8 +25,8 @@ REVERSE RELAY
   reverse transparent relay
   -------------------------
 
-    {"mode":"finder", "secret":"123456", "listen":"1.1.1.1:1111", "target":"2.2.2.2:2222"}
-    {"mode":"mapper", "secret":"123456", "listen":"2.2.2.2:2222", "target":"3.3.3.3:3333"}
+    {"mode":"finder", "args": {"listen":"1.1.1.1:1111", "target":"2.2.2.2:2222", "secret":"123456"}}
+    {"mode":"mapper", "args": {"listen":"2.2.2.2:2222", "target":"3.3.3.3:3333", "secret":"123456"}}
 
       server <------TCP------ finder <------TCP------>> [mapper] <------TCP------ client
                           listen  target             listen  target
@@ -34,8 +34,8 @@ REVERSE RELAY
   reverse encrypted relay
   -----------------------
 
-    {"mode":"broker", "secret":"0123456789abcdef", "listen":"1.1.1.1:1111", "target":"2.2.2.2:2222"}
-    {"mode":"router", "secret":"0123456789abcdef", "listen":"2.2.2.2:2222", "target":"3.3.3.3:3333"}
+    {"mode":"broker", "args": {"listen":"1.1.1.1:1111", "target":"2.2.2.2:2222", "secret":"0123456789abcdef"}}
+    {"mode":"router", "args": {"listen":"2.2.2.2:2222", "target":"3.3.3.3:3333", "secret":"0123456789abcdef"}}
 
       server <------TCP------ broker <======TCPS======>> [router] <------TCP------ client
                           listen  target              listen  target
@@ -47,12 +47,12 @@ PROXY
   transparent proxy
   -----------------
 
-    {"mode":"http", "listen":"1.1.1.1:8080"}
+    {"mode":"http", "args": {"listen":"1.1.1.1:8080"}}
 
       client ------TCP------> [http ~~~~~~TCP~~~~~~> server
                            listen
 
-    {"mode":"sock", "listen":"1.1.1.1:1080"}
+    {"mode":"sock", "args": {"listen":"1.1.1.1:1080"}}
 
       client ------TCP------> [sock ~~~~~~TCP~~~~~~> server
                            listen
@@ -60,9 +60,9 @@ PROXY
   encrypted proxy
   ---------------
 
-    {"mode":"https", "secret":"0123456789abcdef", "listen":"1.1.1.1:8080", "target":"2.2.2.2:2222"}
-    {"mode":"socks", "secret":"0123456789abcdef", "listen":"1.1.1.1:1080", "target":"2.2.2.2:2222"}
-    {"mode":"agent", "secret":"0123456789abcdef", "listen":"2.2.2.2:2222"}
+    {"mode":"https", "args": {"listen":"1.1.1.1:8080", "target":"2.2.2.2:2222", "secret":"0123456789abcdef"}}
+    {"mode":"socks", "args": {"listen":"1.1.1.1:1080", "target":"2.2.2.2:2222", "secret":"0123456789abcdef"}}
+    {"mode":"agent", "args": {"listen":"2.2.2.2:2222", "secret":"0123456789abcdef"}}
 
       client ------TCP------> [https ======TCPS======> [agent ~~~~~~TCP~~~~~~> server
                            listen target            listen

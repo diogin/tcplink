@@ -7,11 +7,12 @@ import (
 	"time"
 )
 
-func serveSocks(listen string, target string, secret string) {
-	addr, err := net.ResolveTCPAddr("tcp", listen)
+func serveSocks(args map[string]string) {
+	addr, err := net.ResolveTCPAddr("tcp", args["listen"])
 	must(err)
 	door, err := net.ListenTCP("tcp", addr)
 	must(err)
+	target, secret := args["target"], args["secret"]
 	for {
 		if client, err := door.AcceptTCP(); err == nil {
 			go relaySocks(client, target, secret)
