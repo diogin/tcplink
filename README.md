@@ -1,8 +1,8 @@
 RELAY
 =====
 
-  transparent relay
-  -----------------
+  cleartext relay
+  ---------------
 
     {"mode":"relay", "args": {"listen":"1.1.1.1:1111", "target":"2.2.2.2:2222"}}
 
@@ -22,8 +22,8 @@ RELAY
 REVERSE RELAY
 =============
 
-  reverse transparent relay
-  -------------------------
+  reverse cleartext relay
+  -----------------------
 
     {"mode":"finder", "args": {"listen":"1.1.1.1:1111", "target":"2.2.2.2:2222", "secret":"123456"}}
     {"mode":"mapper", "args": {"listen":"2.2.2.2:2222", "target":"3.3.3.3:3333", "secret":"123456"}}
@@ -44,8 +44,8 @@ REVERSE RELAY
 PROXY
 =====
 
-  transparent proxy
-  -----------------
+  cleartext proxy
+  ---------------
 
     {"mode":"http", "args": {"listen":"1.1.1.1:8080"}}
 
