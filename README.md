@@ -22,7 +22,7 @@ RELAY
 REVERSE RELAY
 =============
 
-  reverse cleartext relay
+  cleartext reverse relay
   -----------------------
 
     {"mode":"finder", "args": {"listen":"1.1.1.1:1111", "target":"2.2.2.2:2222", "secret":"123456"}}
@@ -31,7 +31,7 @@ REVERSE RELAY
       server <------TCP------ finder <------TCP------>> [mapper] <------TCP------ client
                           listen  target             listen  target
 
-  reverse encrypted relay
+  encrypted reverse relay
   -----------------------
 
     {"mode":"broker", "args": {"listen":"1.1.1.1:1111", "target":"2.2.2.2:2222", "secret":"0123456789abcdef"}}
